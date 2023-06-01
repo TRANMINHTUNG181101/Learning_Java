@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html
+        xmlns:th="http://www.thymleaf.org"
+        xmlns:sec="http://www.thymleaf.org/thymleaf-extras-springsecurity4"
+        lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My App</title>
@@ -9,7 +12,7 @@
     <header th:fragment="header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">HUTECH</a>
+                <a class="navbar-brand" href="/">HUTECH</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent"
@@ -27,14 +30,22 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/books/add">Add Book</a>
                         </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post">
+                                <button class="btn btn-outline-danger" type="submit">Logout</button>
+                            </form>
+                        </li>
+                        <li sec:authorize="!isAuthenticated()">
+                            <a href="/login" class="btn btn-outline-primary">Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div th:insert="~{::${content}}">
-        <!--NOI DUNG TRANG CON-->
-    </div>
+<!--    <div th:insert="~{::${content}}">-->
+<!--        &lt;!&ndash;NOI DUNG TRANG CON&ndash;&gt;-->
+<!--    </div>-->
     <footer th:fragment="footer">
         <script th:src="@{/js/bootstrap.min.js}"></script>
     </footer>
